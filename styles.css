@@ -1044,6 +1044,7 @@ section { position: relative; }
   .sustain-grid { grid-template-columns: 1fr; }
   .form-row-split { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; padding: 56px 0 40px; }
+  .site-footer .container { padding-left: 32px; padding-right: 32px; }
   .hero { padding: 128px 0 80px; }
   .services, .about, .sustainability, .contact { padding: 100px 0; }
   .stats-band { padding: 64px 0; }
