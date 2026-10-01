@@ -27,41 +27,18 @@
     });
   }
 
-  /* Notdienst button: on mobile, briefly pulse + reveal the "Notdienst"
-     label whenever scrolling comes to a stop — but only every now and
-     then (cooldown), so it draws the eye without becoming annoying. */
+  /* Notdienst button: on mobile, pulse once shortly after the page
+     loads to draw the eye to it — then never again, so it doesn't
+     get annoying. */
   const phoneBtn = document.querySelector(".header-phone");
   if (phoneBtn) {
-    const isMobile = () => window.matchMedia("(max-width: 860px)").matches;
-    let scrollStopTimer;
-    let lastPulse = 0;
-    const COOLDOWN_MS = 12000;
-    const SHOW_MS = 2400;
-
-    const firePulse = () => {
-      lastPulse = Date.now();
-      phoneBtn.classList.add("pulse");
-      window.setTimeout(() => phoneBtn.classList.remove("pulse"), SHOW_MS);
-    };
-
-    // Show it once shortly after load, even without any scrolling,
-    // so the effect is guaranteed to be visible at least once.
-    window.setTimeout(() => {
-      if (isMobile()) firePulse();
-    }, 1800);
-
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!isMobile()) return;
-        window.clearTimeout(scrollStopTimer);
-        scrollStopTimer = window.setTimeout(() => {
-          if (Date.now() - lastPulse < COOLDOWN_MS) return;
-          firePulse();
-        }, 500);
-      },
-      { passive: true }
-    );
+    const isMobile = window.matchMedia("(max-width: 860px)").matches;
+    if (isMobile) {
+      window.setTimeout(() => {
+        phoneBtn.classList.add("pulse");
+        window.setTimeout(() => phoneBtn.classList.remove("pulse"), 2400);
+      }, 1800);
+    }
   }
 
   /* Scroll-reveal animations */
