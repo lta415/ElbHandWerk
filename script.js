@@ -27,6 +27,34 @@
     });
   }
 
+  /* Notdienst button: on mobile, briefly pulse + reveal the "Notdienst"
+     label whenever scrolling comes to a stop — but only every now and
+     then (cooldown), so it draws the eye without becoming annoying. */
+  const phoneBtn = document.querySelector(".header-phone");
+  if (phoneBtn && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const isMobile = () => window.matchMedia("(max-width: 860px)").matches;
+    let scrollStopTimer;
+    let lastPulse = 0;
+    const COOLDOWN_MS = 12000;
+    const SHOW_MS = 2400;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!isMobile()) return;
+        window.clearTimeout(scrollStopTimer);
+        scrollStopTimer = window.setTimeout(() => {
+          const now = Date.now();
+          if (now - lastPulse < COOLDOWN_MS) return;
+          lastPulse = now;
+          phoneBtn.classList.add("pulse");
+          window.setTimeout(() => phoneBtn.classList.remove("pulse"), SHOW_MS);
+        }, 500);
+      },
+      { passive: true }
+    );
+  }
+
   /* Scroll-reveal animations */
   const revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && revealEls.length) {

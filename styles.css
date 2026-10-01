@@ -215,6 +215,20 @@ section { position: relative; }
   margin-left: 8px;
   opacity: 1;
 }
+
+@keyframes phone-pulse {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.1); }
+  40% { transform: scale(0.96); }
+  62% { transform: scale(1.05); }
+  80% { transform: scale(1); }
+}
+.header-phone.pulse {
+  animation: phone-pulse 0.7s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-phone.pulse { animation: none; }
+}
 .nav-toggle {
   display: none;
   background: none;
@@ -990,8 +1004,24 @@ section { position: relative; }
     color: var(--text);
   }
   .nav-toggle { display: block; }
-  .header-phone span { display: none; }
+  .header-phone-number { display: none; }
   .header-phone { padding: 11px; }
+  .header-phone-label {
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease;
+  }
+  .header-phone.pulse {
+    padding: 11px 18px;
+  }
+  .header-phone.pulse .header-phone-label {
+    max-width: 100px;
+    opacity: 1;
+    margin-left: 6px;
+  }
 }
 
 @media (max-width: 680px) {
